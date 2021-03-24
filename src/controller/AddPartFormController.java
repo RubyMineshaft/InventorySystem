@@ -56,8 +56,8 @@ public class AddPartFormController implements Initializable {
     private TextField partMinTxt;
 
     @FXML
-    void onActionCancel(ActionEvent event) {
-
+    void onActionCancel(ActionEvent event) throws IOException {
+        loadMainMenu(event);
     }
 
     @FXML
