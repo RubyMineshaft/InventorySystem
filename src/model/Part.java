@@ -1,10 +1,12 @@
+package model;
+
 /**
 * Supplied class Part.java 
  */
 
 /**
  *
- * @author Place Your Name Here
+ * @author Matthew Etress
  */
 public abstract class Part {
     private int id;
