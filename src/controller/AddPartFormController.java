@@ -5,7 +5,7 @@ import javafx.fxml.Initializable;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ProductFormController implements Initializable {
+public class AddPartFormController implements Initializable {
 
 
     @Override
