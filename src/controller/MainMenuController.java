@@ -10,7 +10,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import model.Inventory;
 import model.Part;
 import model.Product;
 
@@ -36,7 +38,7 @@ public class MainMenuController implements Initializable {
     private TableColumn<Part, String> partNameCol;
 
     @FXML
-    private TableColumn<Part, Integer> PartInvCol;
+    private TableColumn<Part, Integer> partInvCol;
 
     @FXML
     private TableColumn<Part, Double> partPriceCol;
@@ -99,6 +101,14 @@ public class MainMenuController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        partTableView.setItems(Inventory.getAllParts());
+
+        partIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        partNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        partInvCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        partPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+
 
     }
 }

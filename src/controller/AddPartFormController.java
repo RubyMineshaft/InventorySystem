@@ -91,7 +91,7 @@ public class AddPartFormController implements Initializable {
 
     private int generateId(){
         currentId++;
-        return AddPartFormController.currentId;
+        return currentId;
     }
 
     @Override
