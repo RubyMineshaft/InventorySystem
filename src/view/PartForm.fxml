@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
@@ -14,13 +16,13 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane prefHeight="600.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PartFormController">
+<AnchorPane prefHeight="600.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PartFormController">
    <children>
       <VBox prefHeight="600.0" prefWidth="500.0">
          <children>
             <HBox prefHeight="30.0" prefWidth="200.0" spacing="30.0">
                <children>
-                  <Label fx:id="partFormTitleLbl" style="-fx-font-weight: 800;" text="Add Part">
+                  <Label fx:id="partFormTitleLbl" text="Add Part">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -78,6 +80,15 @@
                   </Label>
                </children>
             </GridPane>
+            <ButtonBar prefHeight="40.0" prefWidth="200.0">
+              <buttons>
+                <Button mnemonicParsing="false" text="Save" />
+                  <Button mnemonicParsing="false" text="Cancel" />
+              </buttons>
+               <padding>
+                  <Insets right="50.0" />
+               </padding>
+            </ButtonBar>
          </children>
       </VBox>
    </children>
