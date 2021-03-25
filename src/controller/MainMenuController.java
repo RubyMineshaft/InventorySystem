@@ -127,7 +127,7 @@ public class MainMenuController implements Initializable {
         productNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         productInvCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
         productPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
-    }git
+    }
 
     public void partSearch(ActionEvent event) {
         String query = partSearchTxt.getText();
