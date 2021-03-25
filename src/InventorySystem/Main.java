@@ -12,9 +12,11 @@ import model.Inventory;
 import model.Outsourced;
 import model.Product;
 
-/** One error I was getting while working on this was a NullPointerException when trying to save Products.
+/** RUNTIME ERROR : One error I was getting while working on this was a NullPointerException when trying to save Products.
  * This was because I forgot to set the associatedParts ObservableList to an FXCollections.observableArrayList().
  * Changing this fixed the error. */
+
+/** FUTURE ENHANCEMENT : Adding the ability to track sales and customer data would greatly improve this app. */
 public class Main extends Application {
 
     @Override

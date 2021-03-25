@@ -4,9 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 /** This is the Product class.
- * One error I was getting while working on this was a NullPointerException when trying to save Products.
- * This was because I forgot to set the associatedParts ObservableList to an FXCollections.observableArrayList().
- * Changing this fixed the error. */
+ */
 public class Product {
 
     private ObservableList<Part> associatedParts = FXCollections.observableArrayList();
