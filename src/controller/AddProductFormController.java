@@ -4,15 +4,21 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import model.Inventory;
 import model.Part;
 import model.Product;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -94,7 +100,7 @@ public class AddProductFormController implements Initializable {
     }
 
     @FXML
-    void onActionSave(ActionEvent event) {
+    void onActionSave(ActionEvent event) throws IOException {
         int id = generateId();
         String name = productNameTxt.getText();
         double price = Double.parseDouble(priceTxt.getText());
@@ -109,8 +115,10 @@ public class AddProductFormController implements Initializable {
 
         Inventory.addProduct(product);
 
-        System.out.println("Products: " + Inventory.getAllProducts());
-        System.out.println("associated Parts: " + Inventory.getAllProducts().get(0).getAllAssociatedParts());
+        Stage stage = (Stage)((Button)event.getSource()).getScene().getWindow();
+        Parent scene = FXMLLoader.load(getClass().getResource("/view/MainMenu.fxml"));
+        stage.setScene(new Scene(scene));
+        stage.show();
     }
 
     @Override

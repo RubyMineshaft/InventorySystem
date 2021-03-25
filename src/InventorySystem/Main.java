@@ -10,6 +10,9 @@ import model.InHouse;
 import model.Inventory;
 import model.Outsourced;
 
+/** One error I was getting while working on this was a NullPointerException when trying to save Products.
+ * This was because I forgot to set the associatedParts ObservableList to an FXCollections.observableArrayList().
+ * Changing this fixed the error. */
 public class Main extends Application {
 
     @Override

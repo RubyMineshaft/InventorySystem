@@ -117,12 +117,17 @@ public class MainMenuController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         partTableView.setItems(Inventory.getAllParts());
-
         partIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         partNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         partInvCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
         partPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
-    }
+
+        productTableView.setItems(Inventory.getAllProducts());
+        productIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        productNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        productInvCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        productPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+    }git
 
     public void partSearch(ActionEvent event) {
         String query = partSearchTxt.getText();
