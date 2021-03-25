@@ -90,6 +90,8 @@ public class ModifyProductFormController {
         associatedParts.remove(associatedPartsTableView.getSelectionModel().getSelectedItem());
     }
 
+
+
     @FXML
     void onActionSave(ActionEvent event) throws IOException {
         int id = Integer.parseInt(productIdTxt.getText());
@@ -143,5 +145,21 @@ public class ModifyProductFormController {
         stage.setScene(new Scene(scene));
         stage.show();
     }
+
+    public void partSearch(ActionEvent event) {
+        String query = partSearchTxt.getText();
+
+        try {
+            Part match = Inventory.lookupPart(Integer.parseInt(query));
+            partTableView.getSelectionModel().select(match);
+        } catch (NumberFormatException e) {
+            ObservableList<Part> matches = Inventory.lookupPart(query);
+            partTableView.setItems(matches);
+        }
+
+        partSearchTxt.clear();
+        partTableView.requestFocus();
+    }
+
 
 }
