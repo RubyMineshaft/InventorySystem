@@ -86,7 +86,7 @@ public class MainMenuController implements Initializable {
 
     @FXML
     void onActionDeleteProduct(ActionEvent event) {
-
+        Inventory.deleteProduct(productTableView.getSelectionModel().getSelectedItem());
     }
 
     @FXML
