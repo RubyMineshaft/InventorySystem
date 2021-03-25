@@ -7,10 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.*;
@@ -23,6 +20,16 @@ public class ModifyProductFormController {
 
     private int listIndex;
 
+    private int id;
+    private String name;
+    private double price;
+    private int stock;
+    private int min;
+    private int max;
+    private String errorText = "";
+
+    @FXML
+    private Label errorTxt;
 
     @FXML
     private TextField productIdTxt;
@@ -90,24 +97,68 @@ public class ModifyProductFormController {
         associatedParts.remove(associatedPartsTableView.getSelectionModel().getSelectedItem());
     }
 
+    private boolean validate(){
+        boolean hasErrors = false;
+
+        name = productNameTxt.getText();
+        if (name == "") {
+            errorText += "Name cannot be empty. \n";
+            hasErrors = true;
+        }
+
+        try { stock = Integer.parseInt(invTxt.getText()); }
+        catch(NumberFormatException e) {
+            errorText += "Inv must be an integer. \n";
+            hasErrors = true;
+        }
+
+        try {price = Double.parseDouble(priceTxt.getText());}
+        catch(NumberFormatException e){
+            errorText += "Price must be a double. \n";
+            hasErrors = true;
+        }
+
+        try {max = Integer.parseInt(maxTxt.getText());}
+        catch(NumberFormatException e) {
+            errorText += "Max must be a number. \n";
+            hasErrors = true;
+        }
+
+        try { min = Integer.parseInt(minTxt.getText()); }
+        catch(NumberFormatException e) {
+            errorText += "Min must be a number. \n";
+            hasErrors = true;
+        }
+
+        if (min > max) {
+            errorText += "Min must be less than Max. \n";
+            hasErrors = true;
+        }
+        if (!(min < stock && stock < max)) {
+            errorText += "Inv must be between Min and Max. \n";
+            hasErrors = true;
+        }
+
+        errorTxt.setText(errorText);
+
+        return !hasErrors;
+    }
 
 
     @FXML
     void onActionSave(ActionEvent event) throws IOException {
-        int id = Integer.parseInt(productIdTxt.getText());
-        String name = productNameTxt.getText();
-        int inv = Integer.parseInt(invTxt.getText());
-        double price = Double.parseDouble(priceTxt.getText());
-        int max = Integer.parseInt(maxTxt.getText());
-        int min = Integer.parseInt(minTxt.getText());
+        errorText = "";
 
-        Product updatedProduct = new Product(id, name, price, inv, min, max);
-        for (Part part : associatedParts) {
-            updatedProduct.addAssociatedPart(part);
+        if (validate()) {
+
+            Product updatedProduct = new Product(id, name, price, stock, min, max);
+            for (Part part : associatedParts) {
+                updatedProduct.addAssociatedPart(part);
+            }
+
+            Inventory.updateProduct(listIndex, updatedProduct);
+            loadMainMenu(event);
         }
-
-        Inventory.updateProduct(listIndex, updatedProduct);
-        loadMainMenu(event);
 
 
     }
@@ -115,6 +166,7 @@ public class ModifyProductFormController {
     public void modifyProduct(Product product) {
 
         listIndex = Inventory.getAllProducts().indexOf(product);
+        id = product.getId();
         associatedParts.addAll(product.getAllAssociatedParts());
 
         productIdTxt.setText(String.valueOf(product.getId()));

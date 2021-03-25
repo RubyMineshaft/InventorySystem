@@ -79,6 +79,11 @@
                         </GridPane.margin>
                     </Label>
                 </GridPane>
+            <Label fx:id="errorTxt">
+               <VBox.margin>
+                  <Insets left="20.0" top="30.0" />
+               </VBox.margin>
+            </Label>
             </VBox>
             <VBox alignment="TOP_RIGHT" layoutX="10.0" layoutY="10.0" prefHeight="560.0" prefWidth="380.0" spacing="10.0">
                 <padding>

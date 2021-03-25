@@ -8,10 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Inventory;
@@ -26,7 +23,17 @@ public class AddProductFormController implements Initializable {
 
     private static int currentId;
     private ObservableList<Part> selectedParts = FXCollections.observableArrayList();
+    private int id = generateId();
+    private String name;
+    private double price;
+    private int stock;
+    private int min;
+    private int max;
+    private String errorText = "";
 
+
+    @FXML
+    private Label errorTxt;
 
     @FXML
     private TextField productIdTxt;
@@ -101,22 +108,68 @@ public class AddProductFormController implements Initializable {
 
     @FXML
     void onActionSave(ActionEvent event) throws IOException {
-        int id = generateId();
-        String name = productNameTxt.getText();
-        double price = Double.parseDouble(priceTxt.getText());
-        int stock = Integer.parseInt(invTxt.getText());
-        int min = Integer.parseInt(minTxt.getText());
-        int max = Integer.parseInt(maxTxt.getText());
+        errorText = "";
 
-        Product product = new Product(id, name, price, stock, min, max);
-        for (Part part : selectedParts) {
-            product.addAssociatedPart(part);
+        if (validate()) {
+
+            Product product = new Product(id, name, price, stock, min, max);
+            for (Part part : selectedParts) {
+                product.addAssociatedPart(part);
+            }
+
+            Inventory.addProduct(product);
+
+            loadMainMenu(event);
+        }
+    }
+
+    private boolean validate(){
+        boolean hasErrors = false;
+
+        name = productNameTxt.getText();
+        if (name == "") {
+            errorText += "Name cannot be empty. \n";
+            hasErrors = true;
         }
 
-        Inventory.addProduct(product);
+        try { stock = Integer.parseInt(invTxt.getText()); }
+        catch(NumberFormatException e) {
+            errorText += "Inv must be an integer. \n";
+            hasErrors = true;
+        }
 
-        loadMainMenu(event);
+        try {price = Double.parseDouble(priceTxt.getText());}
+        catch(NumberFormatException e){
+            errorText += "Price must be a double. \n";
+            hasErrors = true;
+        }
+
+        try {max = Integer.parseInt(maxTxt.getText());}
+        catch(NumberFormatException e) {
+            errorText += "Max must be a number. \n";
+            hasErrors = true;
+        }
+
+        try { min = Integer.parseInt(minTxt.getText()); }
+        catch(NumberFormatException e) {
+            errorText += "Min must be a number. \n";
+            hasErrors = true;
+        }
+
+        if (min > max) {
+            errorText += "Min must be less than Max. \n";
+            hasErrors = true;
+        }
+        if (!(min < stock && stock < max)) {
+            errorText += "Inv must be between Min and Max. \n";
+            hasErrors = true;
+        }
+
+        errorTxt.setText(errorText);
+
+        return !hasErrors;
     }
+
 
     public void partSearch(ActionEvent event) {
         String query = partSearchTxt.getText();
