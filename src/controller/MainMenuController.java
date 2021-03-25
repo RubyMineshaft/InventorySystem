@@ -110,7 +110,18 @@ public class MainMenuController implements Initializable {
     }
 
     @FXML
-    void onActionModifyProduct(ActionEvent event) {
+    void onActionModifyProduct(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/view/ModifyProductForm.fxml"));
+        loader.load();
+
+        ModifyProductFormController controller = loader.getController();
+        controller.modifyProduct(productTableView.getSelectionModel().getSelectedItem());
+
+        stage = (Stage)((Button)event.getSource()).getScene().getWindow();
+        scene = loader.getRoot();
+        stage.setScene(new Scene(scene));
+        stage.show();
 
     }
 

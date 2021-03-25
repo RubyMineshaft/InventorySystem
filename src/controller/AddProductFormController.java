@@ -90,8 +90,8 @@ public class AddProductFormController implements Initializable {
     }
 
     @FXML
-    void onActionCancel(ActionEvent event) {
-
+    void onActionCancel(ActionEvent event) throws IOException {
+        loadMainMenu(event);
     }
 
     @FXML
@@ -115,10 +115,7 @@ public class AddProductFormController implements Initializable {
 
         Inventory.addProduct(product);
 
-        Stage stage = (Stage)((Button)event.getSource()).getScene().getWindow();
-        Parent scene = FXMLLoader.load(getClass().getResource("/view/MainMenu.fxml"));
-        stage.setScene(new Scene(scene));
-        stage.show();
+        loadMainMenu(event);
     }
 
     @Override
@@ -138,7 +135,12 @@ public class AddProductFormController implements Initializable {
         associatedPartNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         associatedPartInvCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
         associatedPartPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+    }
 
-
+    private void loadMainMenu(ActionEvent event) throws IOException {
+        Stage stage = (Stage)((Button)event.getSource()).getScene().getWindow();
+        Parent scene = FXMLLoader.load(getClass().getResource("/view/MainMenu.fxml"));
+        stage.setScene(new Scene(scene));
+        stage.show();
     }
 }
