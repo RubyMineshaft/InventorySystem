@@ -19,8 +19,6 @@ import java.util.ResourceBundle;
 public class AddPartFormController implements Initializable {
 
     private static int currentId;
-    private Stage stage;
-    private Parent scene;
 
     @FXML
     private RadioButton inHouseRBtn;
@@ -83,13 +81,13 @@ public class AddPartFormController implements Initializable {
 
 
     private void loadMainMenu(ActionEvent event) throws IOException {
-        stage = (Stage)((Button)event.getSource()).getScene().getWindow();
-        scene = FXMLLoader.load(getClass().getResource("/view/MainMenu.fxml"));
+        Stage stage = (Stage)((Button)event.getSource()).getScene().getWindow();
+        Parent scene = FXMLLoader.load(getClass().getResource("/view/MainMenu.fxml"));
         stage.setScene(new Scene(scene));
         stage.show();
     }
 
-    private int generateId(){
+    public static int generateId(){
         currentId++;
         return currentId;
     }

@@ -1,5 +1,7 @@
 package controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -90,8 +92,18 @@ public class MainMenuController implements Initializable {
     }
 
     @FXML
-    void onActionModifyPart(ActionEvent event) {
+    void onActionModifyPart(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/view/ModifyPartForm.fxml"));
+        loader.load();
 
+        ModifyPartFormController controller = loader.getController();
+        controller.modifyPart(partTableView.getSelectionModel().getSelectedItem());
+
+        stage = (Stage)((Button)event.getSource()).getScene().getWindow();
+        scene = loader.getRoot();
+        stage.setScene(new Scene(scene));
+        stage.show();
     }
 
     @FXML
@@ -101,15 +113,27 @@ public class MainMenuController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         partTableView.setItems(Inventory.getAllParts());
 
         partIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         partNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         partInvCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
         partPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+    }
 
+    public void partSearch(ActionEvent event) {
+        String query = partSearchTxt.getText();
 
+        try {
+            Part match = Inventory.lookupPart(Integer.parseInt(query));
+            partTableView.getSelectionModel().select(match);
+        } catch (NumberFormatException e) {
+            ObservableList<Part> matches = Inventory.lookupPart(query);
+            partTableView.setItems(matches);
+        }
+
+        partSearchTxt.clear();
+        partTableView.requestFocus();
     }
 }
 
