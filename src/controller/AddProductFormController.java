@@ -1,16 +1,26 @@
 package controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import model.Inventory;
+import model.Part;
+import model.Product;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class AddProductFormController implements Initializable {
+
+    private static int currentId;
+    private ObservableList<Part> selectedParts = FXCollections.observableArrayList();
+
 
     @FXML
     private TextField productIdTxt;
@@ -34,38 +44,43 @@ public class AddProductFormController implements Initializable {
     private TextField partSearchTxt;
 
     @FXML
-    private TableView<?> partTableView;
+    private TableView<Part> partTableView;
 
     @FXML
-    private TableColumn<?, ?> partIdCol;
+    private TableColumn<Part, Integer> partIdCol;
 
     @FXML
-    private TableColumn<?, ?> partNameCol;
+    private TableColumn<Part, String> partNameCol;
 
     @FXML
-    private TableColumn<?, ?> partInvCol;
+    private TableColumn<Part, Integer> partInvCol;
 
     @FXML
-    private TableColumn<?, ?> partPriceCol;
+    private TableColumn<Part, Double> partPriceCol;
 
     @FXML
-    private TableView<?> associatedPartsTableView;
+    private TableView<Part> associatedPartsTableView;
 
     @FXML
-    private TableColumn<?, ?> associatedPartIdCol;
+    private TableColumn<Part, Integer> associatedPartIdCol;
 
     @FXML
-    private TableColumn<?, ?> associatedPartNameCol;
+    private TableColumn<Part, String> associatedPartNameCol;
 
     @FXML
-    private TableColumn<?, ?> associatedPartInvCol;
+    private TableColumn<Part, Integer> associatedPartInvCol;
 
     @FXML
-    private TableColumn<?, ?> associatedPartPriceCol;
+    private TableColumn<Part, Double> associatedPartPriceCol;
+
+    private static int generateId(){
+        currentId++;
+        return currentId;
+    }
 
     @FXML
     void onActionAddPart(ActionEvent event) {
-
+        selectedParts.add(partTableView.getSelectionModel().getSelectedItem());
     }
 
     @FXML
@@ -75,16 +90,47 @@ public class AddProductFormController implements Initializable {
 
     @FXML
     void onActionRemovePart(ActionEvent event) {
-
+        selectedParts.remove(associatedPartsTableView.getSelectionModel().getSelectedItem());
     }
 
     @FXML
     void onActionSave(ActionEvent event) {
+        int id = generateId();
+        String name = productNameTxt.getText();
+        double price = Double.parseDouble(priceTxt.getText());
+        int stock = Integer.parseInt(invTxt.getText());
+        int min = Integer.parseInt(minTxt.getText());
+        int max = Integer.parseInt(maxTxt.getText());
 
+        Product product = new Product(id, name, price, stock, min, max);
+        for (Part part : selectedParts) {
+            product.addAssociatedPart(part);
+        }
+
+        Inventory.addProduct(product);
+
+        System.out.println("Products: " + Inventory.getAllProducts());
+        System.out.println("associated Parts: " + Inventory.getAllProducts().get(0).getAllAssociatedParts());
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        productIdTxt.setText("Auto Gen - Disabled");
+
+        partTableView.setItems(Inventory.getAllParts());
+
+        partIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        partNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        partInvCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        partPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+
+        associatedPartsTableView.setItems(selectedParts);
+
+        associatedPartIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        associatedPartNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        associatedPartInvCol.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        associatedPartPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+
 
     }
 }

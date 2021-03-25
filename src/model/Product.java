@@ -1,5 +1,6 @@
 package model;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 /**
@@ -7,7 +8,7 @@ import javafx.collections.ObservableList;
  */
 public class Product {
 
-    private ObservableList<Part> associatedParts;
+    private ObservableList<Part> associatedParts = FXCollections.observableArrayList();
     private int id, stock, min, max;
     private String name;
     private double price;
@@ -117,7 +118,7 @@ public class Product {
      * @param part the part to add
      */
     public void addAssociatedPart(Part part){
-        associatedParts.add(part);
+        this.associatedParts.add(part);
     }
 
     /** Deletes selected associated part.
