@@ -79,7 +79,7 @@ public class AddProductFormController implements Initializable {
     @FXML
     private TableColumn<Part, Double> associatedPartPriceCol;
 
-    private static int generateId(){
+    public static int generateId(){
         currentId++;
         return currentId;
     }
