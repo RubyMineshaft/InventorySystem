@@ -136,9 +136,10 @@ public class AddProductFormController implements Initializable {
             selectedParts.remove(associatedPartsTableView.getSelectionModel().getSelectedItem());
     }
 
-    /** Handler for the save button. Creates new product if validations pass.
+    /** RUNTIME ERROR : One error I was getting while working on this was a NullPointerException when trying to save Products.
+     * This was because I forgot to set the associatedParts ObservableList to an FXCollections.observableArrayList().
+     * Changing this fixed the error.
      * @param event the click event
-     * @throws IOException
      */
     @FXML
     void onActionSave(ActionEvent event) throws IOException {

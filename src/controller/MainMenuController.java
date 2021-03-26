@@ -151,12 +151,23 @@ public class MainMenuController implements Initializable {
         loader.load();
 
         ModifyPartFormController controller = loader.getController();
-        controller.modifyPart(partTableView.getSelectionModel().getSelectedItem());
 
-        stage = (Stage)((Button)event.getSource()).getScene().getWindow();
-        scene = loader.getRoot();
-        stage.setScene(new Scene(scene));
-        stage.show();
+        Part selectedPart = partTableView.getSelectionModel().getSelectedItem();
+        if (selectedPart == null) {
+            Alert error = new Alert(Alert.AlertType.ERROR);
+            error.setTitle("Modify Part");
+            error.setHeaderText("Selection Error");
+            error.setContentText("You must choose a part to modify before clicking the modify button.");
+
+            error.showAndWait();
+        } else {
+            controller.modifyPart(selectedPart);
+
+            stage = (Stage)((Button)event.getSource()).getScene().getWindow();
+            scene = loader.getRoot();
+            stage.setScene(new Scene(scene));
+            stage.show();
+        }
     }
 
     /** Handler for the modify product button. Navigates to the modify product form.
@@ -169,12 +180,24 @@ public class MainMenuController implements Initializable {
         loader.load();
 
         ModifyProductFormController controller = loader.getController();
-        controller.modifyProduct(productTableView.getSelectionModel().getSelectedItem());
 
-        stage = (Stage)((Button)event.getSource()).getScene().getWindow();
-        scene = loader.getRoot();
-        stage.setScene(new Scene(scene));
-        stage.show();
+        Product selectedProduct = productTableView.getSelectionModel().getSelectedItem();
+        if (selectedProduct == null) {
+            Alert error = new Alert(Alert.AlertType.ERROR);
+            error.setTitle("Modify Product");
+            error.setHeaderText("Selection Error");
+            error.setContentText("You must choose a product to modify before clicking the modify button.");
+
+            error.showAndWait();
+        } else {
+
+            controller.modifyProduct(productTableView.getSelectionModel().getSelectedItem());
+
+            stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+            scene = loader.getRoot();
+            stage.setScene(new Scene(scene));
+            stage.show();
+        }
 
     }
 

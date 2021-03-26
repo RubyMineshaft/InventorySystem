@@ -12,13 +12,8 @@ import model.Inventory;
 import model.Outsourced;
 import model.Product;
 
-/** RUNTIME ERROR : One error I was getting while working on this was a NullPointerException when trying to save Products.
- * This was because I forgot to set the associatedParts ObservableList to an FXCollections.observableArrayList().
- * Changing this fixed the error. */
 
 /** FUTURE ENHANCEMENT : Adding the ability to track sales and customer data would greatly improve this app. */
-
-/** The main class. */
 public class Main extends Application {
 
     /** This gets called when the application is started.
@@ -44,7 +39,9 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-    /** Starts the application.  */
+    /** Starts the application.
+     * Javadoc lacated at: /dist/javadoc
+     */
     public static void main(String[] args) {
         launch(args);
     }
