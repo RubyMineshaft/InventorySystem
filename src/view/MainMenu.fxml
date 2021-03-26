@@ -84,7 +84,7 @@
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="productSearchTxt" prefWidth="180.0" promptText="Search by Product ID or Name">
+                  <TextField fx:id="productSearchTxt" onAction="#productSearch" prefWidth="180.0" promptText="Search by Product ID or Name">
                      <HBox.margin>
                         <Insets left="125.0" />
                      </HBox.margin>
@@ -119,5 +119,10 @@
             <Insets left="800.0" top="40.0" />
          </VBox.margin>
       </Button>
+      <Label fx:id="searchFailTxt">
+         <padding>
+            <Insets left="120.0" />
+         </padding>
+      </Label>
    </VBox>
 </AnchorPane>

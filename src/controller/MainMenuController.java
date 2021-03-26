@@ -8,10 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Inventory;
@@ -20,12 +17,16 @@ import model.Product;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class MainMenuController implements Initializable {
 
     Stage stage;
     Parent scene;
+
+    @FXML
+    private Label searchFailTxt;
 
     @FXML
     private TextField partSearchTxt;
@@ -81,12 +82,40 @@ public class MainMenuController implements Initializable {
 
     @FXML
     void onActionDeletePart(ActionEvent event) {
-        Inventory.deletePart(partTableView.getSelectionModel().getSelectedItem());
+        Part selectedPart = partTableView.getSelectionModel().getSelectedItem();
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirm Delete");
+        alert.setHeaderText("Part Deletion");
+        alert.setContentText("Are you sure you want to delete " + selectedPart.getName() + "?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK)
+            Inventory.deletePart(selectedPart);
     }
 
     @FXML
     void onActionDeleteProduct(ActionEvent event) {
-        Inventory.deleteProduct(productTableView.getSelectionModel().getSelectedItem());
+
+        Product selectedProduct = productTableView.getSelectionModel().getSelectedItem();
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirm Delete");
+        alert.setHeaderText("Product Deletion");
+        alert.setContentText("Are you sure you want to delete " + selectedProduct.getName() + "?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK)
+            if (selectedProduct.getAllAssociatedParts().isEmpty())
+                Inventory.deleteProduct(selectedProduct);
+            else {
+                Alert error = new Alert(Alert.AlertType.ERROR);
+                error.setTitle("Product Deletion Error");
+                error.setContentText("Products with associated parts cannot be deleted. Please remove all associated parts first.");
+                error.showAndWait();
+            }
+
+
     }
 
     @FXML
@@ -140,19 +169,53 @@ public class MainMenuController implements Initializable {
         productPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
     }
 
+
     public void partSearch(ActionEvent event) {
+        searchFailTxt.setText("");
         String query = partSearchTxt.getText();
 
         try {
             Part match = Inventory.lookupPart(Integer.parseInt(query));
+            if (match == null) {
+                searchFailTxt.setText("Search returned no results.");
+                partSearchTxt.setText("");
+            }
             partTableView.getSelectionModel().select(match);
         } catch (NumberFormatException e) {
             ObservableList<Part> matches = Inventory.lookupPart(query);
             partTableView.setItems(matches);
+            if (matches.isEmpty()){
+                searchFailTxt.setText("Search returned no results.");
+                partSearchTxt.clear();
+                partTableView.setItems(Inventory.getAllParts());
+            }
         }
 
-        partSearchTxt.clear();
         partTableView.requestFocus();
+    }
+
+    public void productSearch(ActionEvent event) {
+        searchFailTxt.setText("");
+        String query = productSearchTxt.getText();
+
+        try {
+            Product match = Inventory.lookupProduct(Integer.parseInt(query));
+            if (match == null) {
+                searchFailTxt.setText("Search returned no results.");
+                productSearchTxt.setText("");
+            }
+            productTableView.getSelectionModel().select(match);
+        } catch (NumberFormatException e) {
+            ObservableList<Product> matches = Inventory.lookupProduct(query);
+            productTableView.setItems(matches);
+            if (matches.isEmpty()){
+                searchFailTxt.setText("Search returned no results.");
+                productSearchTxt.clear();
+                productTableView.setItems(Inventory.getAllProducts());
+            }
+        }
+
+        productTableView.requestFocus();
     }
 
 

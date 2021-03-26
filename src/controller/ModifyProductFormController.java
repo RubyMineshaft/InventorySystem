@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import model.*;
 
 import java.io.IOException;
+import java.util.Optional;
 
 public class ModifyProductFormController {
 
@@ -89,12 +90,26 @@ public class ModifyProductFormController {
 
     @FXML
     void onActionCancel(ActionEvent event) throws IOException {
-        loadMainMenu(event);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Cancel");
+        alert.setHeaderText("Confirm Cancel");
+        alert.setContentText("Changes will not be saved. Are you sure you want to cancel?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) loadMainMenu(event);
     }
 
     @FXML
     void onActionRemovePart(ActionEvent event) {
-        associatedParts.remove(associatedPartsTableView.getSelectionModel().getSelectedItem());
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Associated Parts");
+        alert.setHeaderText("Associated part removal");
+        alert.setContentText("Are you sure you want to remove this associated part?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK)
+            associatedParts.remove(associatedPartsTableView.getSelectionModel().getSelectedItem());
     }
 
     private boolean validate(){

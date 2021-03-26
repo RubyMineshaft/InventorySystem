@@ -15,6 +15,7 @@ import model.Part;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ModifyPartFormController implements Initializable {
@@ -64,7 +65,13 @@ public class ModifyPartFormController implements Initializable {
 
     @FXML
     void onActionCancel(ActionEvent event) throws IOException {
-        loadMainMenu(event);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Cancel");
+        alert.setHeaderText("Confirm Cancel");
+        alert.setContentText("Changes will not be saved. Are you sure you want to cancel?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) loadMainMenu(event);
     }
 
     @FXML
