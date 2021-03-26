@@ -102,7 +102,7 @@ public class AddProductFormController implements Initializable {
      * @param event the click event
      */
     @FXML
-    void onActionAddPart(ActionEvent event) {
+    private void onActionAddPart(ActionEvent event) {
         selectedParts.add(partTableView.getSelectionModel().getSelectedItem());
     }
 
@@ -110,7 +110,7 @@ public class AddProductFormController implements Initializable {
      * @param event the click event
      */
     @FXML
-    void onActionCancel(ActionEvent event) throws IOException {
+    private void onActionCancel(ActionEvent event) throws IOException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Cancel");
         alert.setHeaderText("Confirm Cancel");
@@ -124,7 +124,7 @@ public class AddProductFormController implements Initializable {
      * @param event the click event.
      */
     @FXML
-    void onActionRemovePart(ActionEvent event) {
+    private void onActionRemovePart(ActionEvent event) {
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Associated Parts");
@@ -142,7 +142,7 @@ public class AddProductFormController implements Initializable {
      * @param event the click event
      */
     @FXML
-    void onActionSave(ActionEvent event) throws IOException {
+    private void onActionSave(ActionEvent event) throws IOException {
         errorText = "";
 
         if (validate()) {

@@ -90,7 +90,7 @@ public class ModifyProductFormController {
      * @param event the click event
      */
     @FXML
-    void onActionAddPart(ActionEvent event) {
+    private void onActionAddPart(ActionEvent event) {
         associatedParts.add(partTableView.getSelectionModel().getSelectedItem());
     }
 
@@ -98,7 +98,7 @@ public class ModifyProductFormController {
      * @param event the click event
      */
     @FXML
-    void onActionCancel(ActionEvent event) throws IOException {
+    private void onActionCancel(ActionEvent event) throws IOException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Cancel");
         alert.setHeaderText("Confirm Cancel");
@@ -112,7 +112,7 @@ public class ModifyProductFormController {
      * @param event the click event.
      */
     @FXML
-    void onActionRemovePart(ActionEvent event) {
+    private void onActionRemovePart(ActionEvent event) {
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Associated Parts");
@@ -178,7 +178,7 @@ public class ModifyProductFormController {
      * @param event the click event
      */
     @FXML
-    void onActionSave(ActionEvent event) throws IOException {
+    private void onActionSave(ActionEvent event) throws IOException {
         errorText = "";
 
         if (validate()) {
@@ -240,17 +240,26 @@ public class ModifyProductFormController {
      * @param event the search submit event
      */
     public void partSearch(ActionEvent event) {
+        errorTxt.setText("");
         String query = partSearchTxt.getText();
 
         try {
             Part match = Inventory.lookupPart(Integer.parseInt(query));
+            if (match == null) {
+                errorTxt.setText("Search returned no results.");
+                partSearchTxt.setText("");
+            }
             partTableView.getSelectionModel().select(match);
         } catch (NumberFormatException e) {
             ObservableList<Part> matches = Inventory.lookupPart(query);
             partTableView.setItems(matches);
+            if (matches.isEmpty()){
+                errorTxt.setText("Search returned no results.");
+                partSearchTxt.clear();
+                partTableView.setItems(Inventory.getAllParts());
+            }
         }
 
-        partSearchTxt.clear();
         partTableView.requestFocus();
     }
 

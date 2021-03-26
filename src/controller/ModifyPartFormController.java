@@ -70,7 +70,7 @@ public class ModifyPartFormController implements Initializable {
      * @param event the click event
      */
     @FXML
-    void onActionCancel(ActionEvent event) throws IOException {
+    private void onActionCancel(ActionEvent event) throws IOException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Cancel");
         alert.setHeaderText("Confirm Cancel");
@@ -84,7 +84,7 @@ public class ModifyPartFormController implements Initializable {
      * @param event the click event
      */
     @FXML
-    void onActionSave(ActionEvent event) throws IOException {
+    private void onActionSave(ActionEvent event) throws IOException {
         errorText = "";
         try {
             if (validate()) {
@@ -209,7 +209,9 @@ public class ModifyPartFormController implements Initializable {
         return !hasErrors;
     }
 
-    /** Changes machComp label to Machine ID when in house radio button is selected. */
+    /** Changes machComp label to Machine ID when in house radio button is selected.
+     * @param event the click event
+     * */
     public void setInHouse(ActionEvent event) {
         machCompLabel.setText("Machine ID");
     }

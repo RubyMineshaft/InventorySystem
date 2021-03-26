@@ -71,7 +71,7 @@ public class MainMenuController implements Initializable {
      * @param event click event
      */
     @FXML
-    void onActionAddPart(ActionEvent event) throws IOException {
+    private void onActionAddPart(ActionEvent event) throws IOException {
         stage = (Stage)((Button)event.getSource()).getScene().getWindow();
         scene = FXMLLoader.load(getClass().getResource("/view/AddPartForm.fxml"));
         stage.setScene(new Scene(scene));
@@ -82,7 +82,7 @@ public class MainMenuController implements Initializable {
      * @param event click event
      */
     @FXML
-    void onActionAddProduct(ActionEvent event) throws IOException {
+    private void onActionAddProduct(ActionEvent event) throws IOException {
         stage = (Stage)((Button)event.getSource()).getScene().getWindow();
         scene = FXMLLoader.load(getClass().getResource("/view/AddProductForm.fxml"));
         stage.setScene(new Scene(scene));
@@ -93,7 +93,7 @@ public class MainMenuController implements Initializable {
      * @param event click event
      */
     @FXML
-    void onActionDeletePart(ActionEvent event) {
+    private void onActionDeletePart(ActionEvent event) {
         Part selectedPart = partTableView.getSelectionModel().getSelectedItem();
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -110,7 +110,7 @@ public class MainMenuController implements Initializable {
      * @param event click event
      */
     @FXML
-    void onActionDeleteProduct(ActionEvent event) {
+    private void onActionDeleteProduct(ActionEvent event) {
 
         Product selectedProduct = productTableView.getSelectionModel().getSelectedItem();
 
@@ -137,7 +137,7 @@ public class MainMenuController implements Initializable {
      * @param event click event
      */
     @FXML
-    void onActionExit(ActionEvent event) {
+    private void onActionExit(ActionEvent event) {
         System.exit(0);
     }
 
@@ -145,7 +145,7 @@ public class MainMenuController implements Initializable {
      * @param event the click event
      */
     @FXML
-    void onActionModifyPart(ActionEvent event) throws IOException {
+    private void onActionModifyPart(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/view/ModifyPartForm.fxml"));
         loader.load();
@@ -174,7 +174,7 @@ public class MainMenuController implements Initializable {
      * @param event the click event
      */
     @FXML
-    void onActionModifyProduct(ActionEvent event) throws IOException {
+    private void onActionModifyProduct(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/view/ModifyProductForm.fxml"));
         loader.load();

@@ -69,7 +69,7 @@ public class AddPartFormController implements Initializable {
      * @param event the click event
      */
     @FXML
-    void onActionCancel(ActionEvent event) throws IOException {
+    private void onActionCancel(ActionEvent event) throws IOException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Cancel");
         alert.setHeaderText("Confirm Cancel");
@@ -83,7 +83,7 @@ public class AddPartFormController implements Initializable {
      * @param event the click event
      */
     @FXML
-    void onActionSave(ActionEvent event) throws IOException {
+    private void onActionSave(ActionEvent event) throws IOException {
         errorText = "";
         try {
             if (validate()) {
