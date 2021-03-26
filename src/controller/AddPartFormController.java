@@ -17,6 +17,9 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * This is the controller for the add part form.
+ */
 public class AddPartFormController implements Initializable {
 
     private static int currentId;
@@ -62,6 +65,9 @@ public class AddPartFormController implements Initializable {
     private String name, companyName;
     private double price;
 
+    /** Event hadler for the cancel button. Displays a confirmation dialogue and goes back to the main menu if the user clicks "OK".
+     * @param event the click event
+     */
     @FXML
     void onActionCancel(ActionEvent event) throws IOException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -73,6 +79,9 @@ public class AddPartFormController implements Initializable {
         if (result.get() == ButtonType.OK) loadMainMenu(event);
     }
 
+    /** The event handler for the save button. Validates form data and saves if no errors were found.
+     * @param event the click event
+     */
     @FXML
     void onActionSave(ActionEvent event) throws IOException {
         errorText = "";
@@ -95,6 +104,9 @@ public class AddPartFormController implements Initializable {
 
     }
 
+    /** This method navigates back to the main menu.
+     * @param event the click event
+     */
     private void loadMainMenu(ActionEvent event) throws IOException {
         Stage stage = (Stage)((Button)event.getSource()).getScene().getWindow();
         Parent scene = FXMLLoader.load(getClass().getResource("/view/MainMenu.fxml"));
@@ -102,11 +114,16 @@ public class AddPartFormController implements Initializable {
         stage.show();
     }
 
+    /** This method generates a unique id.
+     * @return a unique ID
+     */
     public static int generateId(){
         currentId++;
         return currentId;
     }
 
+    /** This is the first method called when opening the Add part form. It selects the In House radio button and generates an ID.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         inHouseRBtn.setSelected(true);
@@ -114,14 +131,21 @@ public class AddPartFormController implements Initializable {
         id = generateId();
     }
 
-    public void setInHouse(ActionEvent event) {
+    /** Changes the machComp label to Machine ID when the in house radio button is selected.
+     */
+    public void setInHouse() {
         machCompLabel.setText("Machine ID");
     }
 
+    /** Changes the machComp label to Company Name when the Outsourced radio button is selected.
+     */
     public void setOutsourced(){
         machCompLabel.setText("Company Name");
     }
 
+    /** Validates form data. Checks data types and displays error messages if invalid inputs are present.
+     * @return True if all form fields are valid
+     */
     private boolean validate() {
         boolean hasErrors = false;
 

@@ -17,8 +17,13 @@ import model.Product;
  * Changing this fixed the error. */
 
 /** FUTURE ENHANCEMENT : Adding the ability to track sales and customer data would greatly improve this app. */
+
+/** The main class. */
 public class Main extends Application {
 
+    /** This gets called when the application is started.
+     * @param primaryStage the primary stage
+     */
     @Override
     public void start(Stage primaryStage) throws Exception{
 
@@ -39,7 +44,7 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-
+    /** Starts the application.  */
     public static void main(String[] args) {
         launch(args);
     }

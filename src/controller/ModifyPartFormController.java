@@ -18,6 +18,9 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * Controller for Modify part form
+ */
 public class ModifyPartFormController implements Initializable {
 
     private int listIndex;
@@ -63,6 +66,9 @@ public class ModifyPartFormController implements Initializable {
     String name, companyName;
     double price;
 
+    /** Handler for the cancel button. Displays confirmation dialogue and Displays main menu.
+     * @param event the click event
+     */
     @FXML
     void onActionCancel(ActionEvent event) throws IOException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -74,6 +80,9 @@ public class ModifyPartFormController implements Initializable {
         if (result.get() == ButtonType.OK) loadMainMenu(event);
     }
 
+    /** The event handler for the save button. Validates form data and updates part if no errors were found.
+     * @param event the click event
+     */
     @FXML
     void onActionSave(ActionEvent event) throws IOException {
         errorText = "";
@@ -94,6 +103,9 @@ public class ModifyPartFormController implements Initializable {
             errorTxt.setText(errorText);
         }    }
 
+    /** This method navigates back to the main menu.
+     * @param event the click event
+     */
     private void loadMainMenu(ActionEvent event) throws IOException {
         Stage stage = (Stage)((Button)event.getSource()).getScene().getWindow();
         Parent scene = FXMLLoader.load(getClass().getResource("/view/MainMenu.fxml"));
@@ -101,11 +113,16 @@ public class ModifyPartFormController implements Initializable {
         stage.show();
     }
 
+    /** The initialize method doesn't do anything for this view.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
     }
 
+    /** Accepts part information from the main menu view. Populates form fields with object's data.
+     * @param part the part to be modified.
+     */
     public void modifyPart(Part part) {
 
         listIndex = Inventory.getAllParts().indexOf(part);
@@ -128,6 +145,9 @@ public class ModifyPartFormController implements Initializable {
         }
     }
 
+    /** Validates form data. Checks data types and displays error messages if invalid inputs are present.
+     * @return True if all form fields are valid
+     */
     private boolean validate(){
         boolean hasErrors = false;
 
@@ -189,10 +209,12 @@ public class ModifyPartFormController implements Initializable {
         return !hasErrors;
     }
 
+    /** Changes machComp label to Machine ID when in house radio button is selected. */
     public void setInHouse(ActionEvent event) {
         machCompLabel.setText("Machine ID");
     }
 
+    /** Changes machComp label to Company Name when outsourced radio button is selected. */
     public void setOutsourced(){
         machCompLabel.setText("Company Name");
     }

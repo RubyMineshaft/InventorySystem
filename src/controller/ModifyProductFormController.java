@@ -15,6 +15,9 @@ import model.*;
 import java.io.IOException;
 import java.util.Optional;
 
+/**
+ * Controller for the Modify product form.
+ */
 public class ModifyProductFormController {
 
     ObservableList<Part> associatedParts = FXCollections.observableArrayList();
@@ -83,11 +86,17 @@ public class ModifyProductFormController {
     @FXML
     private TableColumn<Part, Double> associatedPartPriceCol;
 
+    /** Adds the selected part to the products associated parts list.
+     * @param event the click event
+     */
     @FXML
     void onActionAddPart(ActionEvent event) {
         associatedParts.add(partTableView.getSelectionModel().getSelectedItem());
     }
 
+    /** Handler for the cancel button. Displays confirmation dialogue and returns user to main menu.
+     * @param event the click event
+     */
     @FXML
     void onActionCancel(ActionEvent event) throws IOException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -99,6 +108,9 @@ public class ModifyProductFormController {
         if (result.get() == ButtonType.OK) loadMainMenu(event);
     }
 
+    /** Handler for the remove associated part button. Displays confirmation dialogue and removes selected associated part.
+     * @param event the click event.
+     */
     @FXML
     void onActionRemovePart(ActionEvent event) {
 
@@ -112,6 +124,9 @@ public class ModifyProductFormController {
             associatedParts.remove(associatedPartsTableView.getSelectionModel().getSelectedItem());
     }
 
+    /** Validates form data. Checks for input errors and displays error messages.
+     * @return true if no fields contain errors
+     */
     private boolean validate(){
         boolean hasErrors = false;
 
@@ -159,7 +174,9 @@ public class ModifyProductFormController {
         return !hasErrors;
     }
 
-
+    /** Handler for the save button. Updates product if validations pass.
+     * @param event the click event
+     */
     @FXML
     void onActionSave(ActionEvent event) throws IOException {
         errorText = "";
@@ -178,6 +195,9 @@ public class ModifyProductFormController {
 
     }
 
+    /** Accepts product information from the main menu view. Populates form fields with object's data.
+     * @param product the product to be modified.
+     */
     public void modifyProduct(Product product) {
 
         listIndex = Inventory.getAllProducts().indexOf(product);
@@ -206,6 +226,9 @@ public class ModifyProductFormController {
         associatedPartPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
     }
 
+    /** Displays the main menu.
+     * @param event the click event
+     */
     private void loadMainMenu(ActionEvent event) throws IOException {
         Stage stage = (Stage)((Button)event.getSource()).getScene().getWindow();
         Parent scene = FXMLLoader.load(getClass().getResource("/view/MainMenu.fxml"));
@@ -213,6 +236,9 @@ public class ModifyProductFormController {
         stage.show();
     }
 
+    /** Handler for part searches. Searches for a part and filters the table view.
+     * @param event the search submit event
+     */
     public void partSearch(ActionEvent event) {
         String query = partSearchTxt.getText();
 

@@ -20,6 +20,9 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * Controller for the main menu.
+ */
 public class MainMenuController implements Initializable {
 
     Stage stage;
@@ -64,6 +67,9 @@ public class MainMenuController implements Initializable {
     @FXML
     private TableColumn<Product, Double> productPriceCol;
 
+    /** Handler for the add part button. Navigates to the add part form.
+     * @param event click event
+     */
     @FXML
     void onActionAddPart(ActionEvent event) throws IOException {
         stage = (Stage)((Button)event.getSource()).getScene().getWindow();
@@ -72,6 +78,9 @@ public class MainMenuController implements Initializable {
         stage.show();
     }
 
+    /** Handler for the add product button. Displays the add product form.
+     * @param event click event
+     */
     @FXML
     void onActionAddProduct(ActionEvent event) throws IOException {
         stage = (Stage)((Button)event.getSource()).getScene().getWindow();
@@ -80,6 +89,9 @@ public class MainMenuController implements Initializable {
         stage.show();
     }
 
+    /** Handler for the delete part button. Displays a confirmation dialogue and deletes selected part.
+     * @param event click event
+     */
     @FXML
     void onActionDeletePart(ActionEvent event) {
         Part selectedPart = partTableView.getSelectionModel().getSelectedItem();
@@ -94,6 +106,9 @@ public class MainMenuController implements Initializable {
             Inventory.deletePart(selectedPart);
     }
 
+    /** Handler for the delete product button. Displays a confirmation dialogue and deletes selected product if there are no associated parts.
+     * @param event click event
+     */
     @FXML
     void onActionDeleteProduct(ActionEvent event) {
 
@@ -118,11 +133,17 @@ public class MainMenuController implements Initializable {
 
     }
 
+    /** Exits the application.
+     * @param event click event
+     */
     @FXML
     void onActionExit(ActionEvent event) {
         System.exit(0);
     }
 
+    /** Handler for the Modify part button. Navigates to the Modify part form.
+     * @param event the click event
+     */
     @FXML
     void onActionModifyPart(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader();
@@ -138,6 +159,9 @@ public class MainMenuController implements Initializable {
         stage.show();
     }
 
+    /** Handler for the modify product button. Navigates to the modify product form.
+     * @param event the click event
+     */
     @FXML
     void onActionModifyProduct(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader();
@@ -154,6 +178,8 @@ public class MainMenuController implements Initializable {
 
     }
 
+    /** Populates Part and Product table views when the view is loaded.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         partTableView.setItems(Inventory.getAllParts());
@@ -170,6 +196,9 @@ public class MainMenuController implements Initializable {
     }
 
 
+    /** Handler for part searches. Filters or selects parts in list depending on search query.
+     * @param event the search submit event
+     */
     public void partSearch(ActionEvent event) {
         searchFailTxt.setText("");
         String query = partSearchTxt.getText();
@@ -194,6 +223,9 @@ public class MainMenuController implements Initializable {
         partTableView.requestFocus();
     }
 
+    /** Handler for product searches. Filters or selects products in list depending on search query.
+     * @param event the search submit event
+     */
     public void productSearch(ActionEvent event) {
         searchFailTxt.setText("");
         String query = productSearchTxt.getText();

@@ -20,6 +20,9 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * Controller for the add product form.
+ */
 public class AddProductFormController implements Initializable {
 
     private static int currentId;
@@ -87,16 +90,25 @@ public class AddProductFormController implements Initializable {
     @FXML
     private TableColumn<Part, Double> associatedPartPriceCol;
 
+    /** Generates a unique ID.
+     * @return a unique ID
+     */
     public static int generateId(){
         currentId++;
         return currentId;
     }
 
+    /** Adds the selected part to the products associated parts list.
+     * @param event the click event
+     */
     @FXML
     void onActionAddPart(ActionEvent event) {
         selectedParts.add(partTableView.getSelectionModel().getSelectedItem());
     }
 
+    /** Handler for the cancel button. Displays confirmation dialogue and returns user to main menu.
+     * @param event the click event
+     */
     @FXML
     void onActionCancel(ActionEvent event) throws IOException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -108,6 +120,9 @@ public class AddProductFormController implements Initializable {
         if (result.get() == ButtonType.OK) loadMainMenu(event);
     }
 
+    /** Handler for the remove associated part button. Displays confirmation dialogue and removes selected associated part.
+     * @param event the click event.
+     */
     @FXML
     void onActionRemovePart(ActionEvent event) {
 
@@ -121,6 +136,10 @@ public class AddProductFormController implements Initializable {
             selectedParts.remove(associatedPartsTableView.getSelectionModel().getSelectedItem());
     }
 
+    /** Handler for the save button. Creates new product if validations pass.
+     * @param event the click event
+     * @throws IOException
+     */
     @FXML
     void onActionSave(ActionEvent event) throws IOException {
         errorText = "";
@@ -138,6 +157,9 @@ public class AddProductFormController implements Initializable {
         }
     }
 
+    /** Validates form data. Checks for input errors and displays error messages.
+     * @return true if no fields contain errors
+     */
     private boolean validate(){
         boolean hasErrors = false;
 
@@ -186,6 +208,9 @@ public class AddProductFormController implements Initializable {
     }
 
 
+    /** Handler for part searches. Searches for a part and filters the table view.
+     * @param event the search submit event
+     */
     public void partSearch(ActionEvent event) {
         errorTxt.setText("");
         String query = partSearchTxt.getText();
@@ -211,6 +236,8 @@ public class AddProductFormController implements Initializable {
     }
 
 
+    /** Initializes the product form. Populates part and associated parts table views.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         productIdTxt.setText("Auto Gen - Disabled");
@@ -230,6 +257,9 @@ public class AddProductFormController implements Initializable {
         associatedPartPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
     }
 
+    /** Displays the main menu.
+     * @param event click event
+     */
     private void loadMainMenu(ActionEvent event) throws IOException {
         Stage stage = (Stage)((Button)event.getSource()).getScene().getWindow();
         Parent scene = FXMLLoader.load(getClass().getResource("/view/MainMenu.fxml"));
